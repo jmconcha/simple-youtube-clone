@@ -2,12 +2,15 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 
-function VideoItem() {
+function VideoItem({ detail }) {
+  const title = detail.title.length > 50 ? detail.title.slice(0, 50) : detail.title;
+  const description = detail.description;
+  const thumbnail = detail.thumbnails.medium.url;
+
   return (
     <Card css={css`
       margin-top: 16px;
@@ -17,8 +20,8 @@ function VideoItem() {
       align-items: center;
     `}>
       <Avatar
-        src="/cat.jpg"
-        alt="cat"
+        src={thumbnail}
+        alt={description}
         css={css`
           width: 60px;
           height: 60px;
@@ -26,8 +29,12 @@ function VideoItem() {
         `}
       />
       <CardContent>
-        <Typography variant="h6" component="p">
-          Lorem ipsum dolor sit amet, consectetur adipisicing.
+        <Typography
+          variant="body1"
+          component="div"
+          css={css}
+        >
+          {title}
         </Typography>
       </CardContent>
     </Card>

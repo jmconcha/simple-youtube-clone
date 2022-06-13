@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
 /** @jsxImportSource @emotion/react */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { css } from '@emotion/react';
 import Box from '@mui/material/Box'
@@ -9,19 +9,33 @@ import Box from '@mui/material/Box'
 import VideoDetail from './VideoDetail';
 import SearchBar from './SearchBar';
 import VideoList from './VideoList';
+import { fetchVideos } from '../utils';
+
+const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [videos, setVideos] = useState([]);
 
   const handleTermChange = e => {
     setSearchTerm(e.target.value);
   }
 
-  const handleTermSubmit = e => {
+  const handleTermSubmit = async e => {
+    const options = {
+      q: searchTerm,
+      maxResults: 10,
+      type: 'video',
+      part: 'snippet',
+      key: YOUTUBE_API_KEY,
+    };
     e.preventDefault();
 
-    console.log('submitting: ', searchTerm);
+    const response = await fetchVideos(options);
+    const videos = response.data.items;
+    setVideos(videos);
   };
+  console.log(videos);
 
   return (
     <Box css={css`
@@ -39,7 +53,7 @@ function App() {
         display: flex;
       `}>
         <VideoDetail />
-        <VideoList />
+        <VideoList videos={videos} />
       </Box>
     </Box>
   );
