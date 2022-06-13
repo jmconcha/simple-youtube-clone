@@ -6,19 +6,27 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 
-function VideoItem({ detail }) {
+function VideoItem({ detail, onSelectVideo }) {
   const title = detail.title.length > 50 ? detail.title.slice(0, 50) : detail.title;
   const description = detail.description;
   const thumbnail = detail.thumbnails.medium.url;
 
   return (
-    <Card css={css`
-      margin-top: 16px;
-      width: 400px;
-      height: 100px;
-      display: flex;
-      align-items: center;
-    `}>
+    <Card
+      css={css`
+        margin-top: 16px;
+        width: 400px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        
+        &:hover {
+          box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+        }
+      `}
+      onClick={onSelectVideo}
+    >
       <Avatar
         src={thumbnail}
         alt={description}
@@ -29,11 +37,7 @@ function VideoItem({ detail }) {
         `}
       />
       <CardContent>
-        <Typography
-          variant="body1"
-          component="div"
-          css={css}
-        >
+        <Typography variant="body1" component="div" css={css}>
           {title}
         </Typography>
       </CardContent>

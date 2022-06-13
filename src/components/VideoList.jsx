@@ -5,9 +5,13 @@ import Box from '@mui/material/Box';
 
 import VideoItem from './VideoItem';
 
-function VideoList({ videos }) {
-  const videoList = videos.map(video => (
-    <VideoItem key={video.id.videoId} detail={video.snippet} />
+function VideoList({ videos, onSelectVideo }) {
+  const videoList = videos.map((video) => (
+    <VideoItem
+      key={video.id.videoId}
+      detail={video.snippet}
+      onSelectVideo={() => onSelectVideo(video.id.videoId)}
+    />
   ));
 
   return (
